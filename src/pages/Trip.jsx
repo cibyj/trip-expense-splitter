@@ -84,7 +84,7 @@ export default function Trip() {
   }
 
   return (
-    <div>
+    <div className="space-y-6">
       {/* -------------------------------
           No Trip Selected
       ------------------------------- */}
