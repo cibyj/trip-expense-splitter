@@ -37,7 +37,6 @@ export default function ExpenseForm({ tripId, participants, onAdd }) {
     toast.success('Expense added successfully');
     onAdd();
 
-    // Reset form
     setAmount('');
     setDescription('');
     setPaidBy('');
@@ -45,63 +44,73 @@ export default function ExpenseForm({ tripId, participants, onAdd }) {
   }
 
   return (
-    <div className="space-y-3">
-      <h3 className="text-lg font-semibold text-gray-800">Add Expense</h3>
+    <div className="space-y-4">
 
-      {/* Description */}
-      <input
-        className="border rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-200 w-64"
-        placeholder="Description"
-        value={description}
-        onChange={(e) => { setDescription(e.target.value); setError(''); }}
-      />
-
-      {/* Amount */}
-      <input
-        className={`border rounded px-3 py-2 text-sm focus:outline-none focus:ring ${
-          error && !amount ? 'border-red-500 focus:ring-red-200' : 'focus:ring-blue-200'
-        } w-32`}
-        type="number"
-        placeholder="$0.00"
-        value={amount}
-        onChange={(e) => { setAmount(e.target.value); setError(''); }}
-      />
-
-      {/* Date */}
-      <input
-        className="border rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-200 w-40"
-        type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-      />
-
-      {/* Paid By */}
-      <select
-        className={`border rounded px-3 py-2 text-sm focus:outline-none focus:ring ${
-          error && !paidBy ? 'border-red-500 focus:ring-red-200' : 'focus:ring-blue-200'
-        } w-48`}
-        value={paidBy}
-        onChange={(e) => { setPaidBy(e.target.value); setError(''); }}
-      >
-        <option value="">Paid by</option>
-        {participants.map((p) => (
-          <option key={p.id} value={p.id}>{p.name}</option>
-        ))}
-      </select>
-
-      {/* Error message */}
-      {error && <p className="text-sm text-red-600">{error}</p>}
-
-      {/* Submit button */}
-      <button
-        onClick={addExpense}
-        disabled={!amount || !paidBy}
-        className={`px-4 py-2 rounded text-sm text-white ${
-          !amount || !paidBy ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
-        }`}
-      >
+      <h3 className="text-lg font-semibold text-gray-800">
         Add Expense
-      </button>
+      </h3>
+
+      {/* Form Fields Stack */}
+      <div className="flex flex-col gap-3">
+
+        {/* Description */}
+        <input
+          className="border rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-200 w-64"
+          placeholder="Description"
+          value={description}
+          onChange={(e) => { setDescription(e.target.value); setError(''); }}
+        />
+
+        {/* Amount */}
+        <input
+          className={`border rounded px-3 py-2 text-sm focus:outline-none focus:ring ${
+            error && !amount ? 'border-red-500 focus:ring-red-200' : 'focus:ring-blue-200'
+          } w-32`}
+          type="number"
+          placeholder="$0.00"
+          value={amount}
+          onChange={(e) => { setAmount(e.target.value); setError(''); }}
+        />
+
+        {/* Date */}
+        <input
+          className="border rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-blue-200 w-40"
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
+
+        {/* Paid By */}
+        <select
+          className={`border rounded px-3 py-2 text-sm focus:outline-none focus:ring ${
+            error && !paidBy ? 'border-red-500 focus:ring-red-200' : 'focus:ring-blue-200'
+          } w-48`}
+          value={paidBy}
+          onChange={(e) => { setPaidBy(e.target.value); setError(''); }}
+        >
+          <option value="">Paid by</option>
+          {participants.map((p) => (
+            <option key={p.id} value={p.id}>{p.name}</option>
+          ))}
+        </select>
+
+        {/* Error */}
+        {error && <p className="text-sm text-red-600">{error}</p>}
+
+        {/* Submit */}
+        <button
+          onClick={addExpense}
+          disabled={!amount || !paidBy}
+          className={`px-4 py-2 rounded text-sm text-white w-32 ${
+            !amount || !paidBy
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-blue-600 hover:bg-blue-700'
+          }`}
+        >
+          Add Expense
+        </button>
+
+      </div>
     </div>
   );
 }

@@ -12,7 +12,7 @@ export default function TripSelector({ onSelect }) {
 
   return (
     <select
-className="w-full border rounded px-3 py-2 text-sm
+className="w-64 border rounded px-3 py-2 text-sm
              focus:outline-none focus:ring focus:ring-blue-200"
 
       onChange={(e) => {
