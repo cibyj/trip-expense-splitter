@@ -1,13 +1,7 @@
-import { Routes, Route } from 'react-router-dom';
 import Trip from './pages/Trip';
-import ParticipantsPage from './pages/ParticipantsPage';
-import { Toaster } from 'react-hot-toast';
 
 export default function App() {
   return (
-   
-    <>
-
     <div className="min-h-screen bg-gray-100">
       <header className="bg-gray-800 shadow">
     
@@ -23,19 +17,8 @@ export default function App() {
       <main className="max-w-5xl mx-auto px-4 py-6">
 
 
-      <Routes>
-        <Route path="/" element={<Trip />} />
-        <Route path="/trip/:tripId" element={<Trip />} />
-        <Route path="/trip/:tripId/participants" element={<ParticipantsPage />} />
-      </Routes>
-
- 
+        <Trip />
       </main>
     </div>
-
-
-      <Toaster position="top-right" />
-
-    </>
   );
 }

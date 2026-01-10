@@ -40,15 +40,13 @@ export default function Settlement({ participants, expenses, tripName }) {
   let j = 0;
 
   while (i < debtors.length && j < creditors.length) {
-    const amount = Math.min(
-      -debtors[i].balance,
-      creditors[j].balance
-    );
+    const amount = Math.min(-debtors[i].balance, creditors[j].balance);
 
     settlements.push({
       from: debtors[i].name,
       to: creditors[j].name,
       amount,
+      isDebtor: true, // for coloring
     });
 
     debtors[i].balance += amount;
@@ -59,37 +57,31 @@ export default function Settlement({ participants, expenses, tripName }) {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow p-4">
-      <h3 className="text-lg font-semibold text-gray-800 mb-2">
+    <div className="bg-white rounded-lg border-2 border-gray-500 p-4 max-w-md">
+      <h3 className="text-xl font-bold text-gray-800 mb-2">
         Settlement Summary
       </h3>
 
       <p className="text-sm text-gray-600 mb-4">
-        Total expenses: <span className="font-medium">${total.toFixed(2)}</span> ·
+        Total expenses:{' '}
+        <span className="font-medium">${total.toFixed(2)}</span> ·
         Each person owes{' '}
-        <span className="font-medium">
-          ${share.toFixed(2)}
-        </span>
+        <span className="font-medium">${share.toFixed(2)}</span>
       </p>
 
       {settlements.length === 0 ? (
-        <p className="text-sm text-gray-500">
-          No settlements required.
-        </p>
+        <p className="text-sm text-gray-500">No settlements required.</p>
       ) : (
-        <ul className="space-y-2 mb-4">
+        <ul className="mb-4 space-y-1">
           {settlements.map((s, i) => (
             <li
               key={i}
-              className="text-sm flex justify-between"
+              className={`grid grid-cols-[1fr_auto] items-center text-sm ${
+                s.isDebtor ? 'text-red-600' : 'text-green-600'
+              }`}
             >
-              <span>
-                <span className="font-medium">{s.from}</span> owes{' '}
-                <span className="font-medium">{s.to}</span>
-              </span>
-              <span className="font-semibold">
-                ${s.amount.toFixed(2)}
-              </span>
+              <span className="font-medium">{s.from} owes {s.to}</span>
+              <span className="font-semibold">${s.amount.toFixed(2)}</span>
             </li>
           ))}
         </ul>
@@ -98,9 +90,7 @@ export default function Settlement({ participants, expenses, tripName }) {
       {/* Export buttons */}
       <div className="flex flex-wrap gap-3 mt-4">
         <button
-          onClick={() =>
-            exportSettlementCSV(expenses, participants, settlements)
-          }
+          onClick={() => exportSettlementCSV(expenses, participants, settlements)}
           className="px-4 py-2 text-sm bg-gray-800 text-white rounded hover:bg-gray-900"
         >
           Export CSV
